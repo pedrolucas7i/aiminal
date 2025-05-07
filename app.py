@@ -117,5 +117,12 @@ def intelligent_terminal():
             response = send_to_ollama(clean_prompt)
             print(f"Ollama: {response}")
 
+        else:
+            output, error = execute_terminal_command(prompt)
+            if output:
+                print(f"[Output]\n{output}")
+            if error:
+                print(f"[Error]\n{error}")
+
 if __name__ == "__main__":
     intelligent_terminal()
