@@ -30,6 +30,7 @@ def send_to_ollama(prompt):
 
 def execute_terminal_command(command):
     try:
+        # Executa o comando no terminal e captura stdout e stderr
         result = subprocess.run(command, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         return result.stdout.decode('utf-8'), result.stderr.decode('utf-8')
     except subprocess.CalledProcessError as e:
@@ -84,6 +85,9 @@ def run_generated_code(code, filename):
 
 def intelligent_terminal():
     print("Aiminal (AI + TERMINAL) - Use /code, /question ou /fix. Digite 'exit' para sair.")
+    command_history = []
+    command_outputs = []
+
     while True:
         prompt = input(f"{os.getcwd()} $> ").strip()
 
@@ -112,21 +116,6 @@ def intelligent_terminal():
             clean_prompt = prompt[len('/question'):].strip()
             response = send_to_ollama(clean_prompt)
             print(f"Ollama: {response}")
-
-        elif prompt.startswith('/fix'):
-            print("[!] Capturing terminal context to send to AI...")
-            output, error = execute_terminal_command("history | tail -n 10")
-            terminal_state = f"Últimos comandos:\n{output}\nErros recentes:\n{error}"
-            fix_prompt = f"Análise os comandos e erros abaixo e sugira correções:\n{terminal_state}"
-            response = send_to_ollama(fix_prompt)
-            print(f"[AI Fix Suggestion]\n{response}")
-
-        else:
-            output, error = execute_terminal_command(prompt)
-            if output:
-                print(f"[Output]\n{output}")
-            if error:
-                print(f"[Error]\n{error}")
 
 if __name__ == "__main__":
     intelligent_terminal()
