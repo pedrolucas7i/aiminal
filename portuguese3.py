@@ -15,11 +15,13 @@ EXT_POR_LINGUAGEM = {
     'html': 'html',
     'bash': 'sh',
     'shell': 'sh',
+    'shellscript': 'sh',
     'c': 'c',
     'cpp': 'cpp',
     'java': 'java',
     'json': 'json',
     'txt': 'txt',
+    'text': 'txt',
     'css': 'css',
     'ruby': 'rb',
     'go': 'go',
@@ -38,10 +40,10 @@ EXT_POR_LINGUAGEM = {
     'elixir': 'ex',
     'clojure': 'clj',
     'groovy': 'groovy',
-    'shellscript': 'sh',
     'sql': 'sql',
     'markdown': 'md',
     'yaml': 'yaml',
+    'yml': 'yml',
     'xml': 'xml',
     'csv': 'csv',
     'tex': 'tex',
@@ -50,18 +52,27 @@ EXT_POR_LINGUAGEM = {
     'verilog': 'v',
     'dart': 'dart',
     'coffee': 'coffee',
+    'coffeescript': 'coffee',
     'powershell': 'ps1',
     'batch': 'bat',
+    'bat': 'bat',
     'fortran': 'f90',
+    'f90': 'f90',
     'assembly': 'asm',
+    'asm': 'asm',
     'actionscript': 'as',
     'vim': 'vim',
-    'text': 'txt',
     'log': 'log',
     'ini': 'ini',
-    'xml': 'xml',
-    'csv': 'csv',
+    'makefile': 'mk',
+    'dockerfile': 'dockerfile',
+    'toml': 'toml',
+    'config': 'conf',
+    'conf': 'conf',
+    'tsx': 'tsx',
+    'jsx': 'jsx',
 }
+
 
 # Função para enviar prompt ao servidor Ollama
 def enviar_para_ollama(prompt):
@@ -69,7 +80,7 @@ def enviar_para_ollama(prompt):
 
 # Identifica se o prompt é para gerar código ou responder pergunta
 def identificar_intencao(prompt):
-    palavras_chave_codigo = ['cria', 'criar', 'gera', 'gerar', 'escreve', 'escrever', 'exemplo', 'arquivo', 'script', 'código']
+    palavras_chave_codigo = ['crie', 'cria', 'criar', 'gera', 'gerar', 'escreve', 'escrever', 'exemplo', 'arquivo', 'script', 'código']
     if any(palavra in prompt.lower() for palavra in palavras_chave_codigo):
         return 'gerar_codigo'
     return 'responder_pergunta'
